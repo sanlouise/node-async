@@ -22,5 +22,18 @@ if (typeof argv.l === 'string' && argv.l.length > 0) {
 	});
 
 } else {
-	console.log('You did not provide a valid address.')
+	console.log('You did not provide a valid address.');
+	//If no valid location was given, execute the following
+	//This returns the guessed location
+	location(function (location) {
+		if (location) {
+			weather(location.city, function (currentWeather) {
+				console.log(currentWeather);
+			})
+
+		} else {
+			console.log('Oops, unable to guess location.')
+		}
+
+	});
 }

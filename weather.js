@@ -7,7 +7,7 @@ module.exports = function(location, callback) {
 	var url = 'http://api.openweathermap.org/data/2.5/weather?appid=3e0246cd6661e75446a7625568010b08&q=' + encodedLocation + '&units=metric';
 
 	if (!location) {
-		return callback('No location provided');
+		return callback('Oops, we could not find your location.');
 	}
 
 	request({
