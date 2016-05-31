@@ -1,8 +1,14 @@
 var request = require('request');
-var url = 'http://api.openweathermap.org/data/2.5/weather?appid=3e0246cd6661e75446a7625568010b08&q=Soestdijk&units=metric';
 
 
-module.exports = function(callback) {
+module.exports = function(location, callback) {
+
+	var encodedLocation = encodeURIComponent(location);
+	var url = 'http://api.openweathermap.org/data/2.5/weather?appid=3e0246cd6661e75446a7625568010b08&q=' + encodedLocation + '&units=metric';
+
+	if (!location) {
+		return callback('No location provided');
+	}
 
 	request({
 		url: url,
