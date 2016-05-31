@@ -1,27 +1,37 @@
-function doWork (data, callback) {
-	callback('done');
-}
+var request = require('request');
+var weather = require('./weather.js');
+var location = require('./location.js')
 
-function doWorkPromise (data) {
-	return new Promise(function (resolve, reject) {
+function getWeather(location) {
+	return new Promise (function (resolve, reject) {
 
-		setTimeout(function() {
-			resolve('Everything worked fine!');
+		var encodedLocation = encodeURIComponent(location);
+		var url = 'http://api.openweathermap.org/data/2.5/weather?appid=3e0246cd6661e75446a7625568010b08&q=' + encodedLocation + '&units=metric';
 
-		}, 1000);
+		if (!location) {
+			return reject('Oops, we could not find your location.');
+		}
 
-		// resolve('Everything worked fine!');
-		// reject({
-		// 	error: 'Oops, something went wrong.'
-		// });
+		request({
+			url: url,
+			json: true
+		}, function (error, response, body) {
+			if (error) {
+				reject('Unable to find weather for this location.');
+			} else {
+				//Print what is in the body. The 4 stands for the number of spaces by which JSON is indented.
+				// console.log(JSON.stringify(body, null, 4));
+				resolve('It is ' + body.main.temp + ' degrees Celcius in ' + body.name);
+
+			}
+		});
 
 	});
 }
+// callback('It is ' + body.main.temp + ' degrees Celcius in ' + body.name);
+getWeather('New York').then(function (currentWeather) {
+	console.log(currentWeather);
+}, function (error) {
 
-doWorkPromise('This is data').then(function (data) {
-	console.log(data);
-	// Add the following code to catch errors
-}, function(error) {
 	console.log(error);
-
-});
+})
