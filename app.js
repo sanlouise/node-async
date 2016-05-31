@@ -17,6 +17,7 @@ var argv = require('yargs')
 	.argv;
 
 if (typeof argv.l === 'string' && argv.l.length > 0) {
+	console.log('We got information about this city!')
 	weather(argv.l, function(currentWeather) {
 		console.log(currentWeather);
 	});
