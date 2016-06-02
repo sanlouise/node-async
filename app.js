@@ -33,6 +33,7 @@ if (typeof argv.l === 'string' && argv.l.length > 0) {
 	location().then(function (loc) {
 		return weather(loc.city);
 	}).then(function (currentWeather) {
+		console.log(currentWeather);
 	}).catch(function (error) {
 		console.log(error)
 	});

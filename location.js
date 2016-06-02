@@ -1,19 +1,21 @@
 //Fetch users location based on their IP address
-var request = require('request');
-var url = 'http://ipinfo.io';
+var request = require('request'),
+    url = 'http://ipinfo.io';
 
-module.exports = function() {
-	return new Promise(function (resolve, reject) {
 
-		request({
-			url: url,
-			json: true
-		}, function (error, response, body) {
-			if (error) {
-				reject('Unable to find location.');
-			} else {
-				resolve(body);
-			}
-		});
-	});
+module.exports = function () {
+    return new Promise(function (reject, resolve) {
+        request({
+            url: url,
+            json: true
+        }, function (error, response, body) {
+            if (error) {
+                reject('We could not guess your location!');
+            } else if (body.city.length !== 0) {
+                resolve(body);
+            } else {
+                reject('We could not guess your location!');
+            }
+        });
+    });
 };
