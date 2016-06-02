@@ -3,11 +3,12 @@ var weather = require('./weather.js');
 var location = require('./location.js')
 
 function getWeather(location) {
+
+	var encodedLocation = encodeURIComponent(location);
+	var url = 'http://api.openweathermap.org/data/2.5/weather?appid=3e0246cd6661e75446a7625568010b08&q=' + encodedLocation + '&units=metric';
+
+	// Return promise  so user has access to it.
 	return new Promise (function (resolve, reject) {
-
-		var encodedLocation = encodeURIComponent(location);
-		var url = 'http://api.openweathermap.org/data/2.5/weather?appid=3e0246cd6661e75446a7625568010b08&q=' + encodedLocation + '&units=metric';
-
 		if (!location) {
 			return reject('Oops, we could not find your location.');
 		}
@@ -25,13 +26,15 @@ function getWeather(location) {
 
 			}
 		});
-
 	});
 }
 // callback('It is ' + body.main.temp + ' degrees Celcius in ' + body.name);
+
+// Calling the Promise
+//If the getWeather function gets called succesfully, 'then' will be run.
 getWeather('New York').then(function (currentWeather) {
 	console.log(currentWeather);
 }, function (error) {
 
 	console.log(error);
-})
+});

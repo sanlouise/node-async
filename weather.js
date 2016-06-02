@@ -1,6 +1,5 @@
 var request = require('request');
 
-
 module.exports = function(location, callback) {
 
 	var encodedLocation = encodeURIComponent(location);
