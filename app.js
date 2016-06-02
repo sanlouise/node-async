@@ -30,15 +30,10 @@ if (typeof argv.l === 'string' && argv.l.length > 0) {
 	console.log('You did not provide a valid address.');
 	//If no valid location was given, execute the following
 	//This returns the guessed location
-	location(function (location) {
-		if (location) {
-			weather(location.city, function (currentWeather) {
-				console.log(currentWeather);
-			})
-
-		} else {
-			console.log('Oops, unable to guess location.')
-		}
-
+	location().then(function (loc) {
+		return weather(loc.city);
+	}).then(function (currentWeather) {
+	}).catch(function (error) {
+		console.log(error)
 	});
 }
