@@ -18,9 +18,13 @@ var argv = require('yargs')
 
 if (typeof argv.l === 'string' && argv.l.length > 0) {
 	console.log('We got information about this city!')
-	weather(argv.l, function(currentWeather) {
+	weather(argv.l).then(function(currentWeather) {
 		console.log(currentWeather);
-	});
+
+
+	}).catch(function(error) {
+		console.log(error);
+	})
 
 } else {
 	console.log('You did not provide a valid address.');
